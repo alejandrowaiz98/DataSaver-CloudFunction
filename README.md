@@ -6,8 +6,11 @@ ExternalApp <---> DataSaver
 
 Where ExternalApp will use the following structure to communicate (via JSON):
 
-blablabla 
+    PubsubMessage -> 
+    Attributes: Origen, Date, MessageID, DestinyCollection,
+    Data: Message data in JSON format
 
 And the DataSaver will respond with:
 
-blablabla 
+- In case of err: return err 
+- In case of success: return nil
