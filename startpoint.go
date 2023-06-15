@@ -1,6 +1,12 @@
 package p
 
-import "context"
+import (
+	"context"
+	"fmt"
+	"log"
+
+	firestore "alejandrowaiz.com/DataSaver/firestore"
+)
 
 type PubSubMessage struct {
 	Data       []byte            `json:"data"`
@@ -8,6 +14,20 @@ type PubSubMessage struct {
 }
 
 func Startpoint(ctx context.Context, m PubSubMessage) error {
+
+	db, err := firestore.New()
+
+	if err != nil {
+		return fmt.Errorf("[ Startpoint | Firestore | New ] err: %v", err)
+	}
+
+	err = db.Save(m.Data, m.Attributes)
+
+	if err != nil {
+		return fmt.Errorf("[ Startpoint | Firestore | Save ] err: %v", err)
+	}
+
+	log.Println("Successfully saved!")
 
 	return nil
 
